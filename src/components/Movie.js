@@ -1,18 +1,18 @@
 import '../App.css';
 import React, {useState} from 'react';
 function Movie(props){  
-    const links = props.img;
-    const data = props.data;
+    const links = props.data;
+
  
     
     const makeImg = (link)=>{
         return(
             <li>
                     <figure>
-                         <img src= {link} alt="img01" />
+                         <img src= {link.url} alt="img01" />
                          <figcaption>
-                           <h3>Camera</h3>
-                           <span>Jacob Cummings</span>
+                           <h3>{link.overview}</h3>
+                           <span>ID: {link.id}</span>
                            <a href="http://dribbble.com/shots/1115632-Camera">Take a look</a>
                        </figcaption>
                    </figure>
@@ -23,7 +23,7 @@ function Movie(props){
         <div>
        <ul className="grid cs-style-1">
          {links.map(link =>   
-                makeImg(link.url)
+                makeImg(link)
           )}
           
             

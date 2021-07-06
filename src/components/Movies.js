@@ -34,13 +34,8 @@ var values =
 
 function Movies(){
     const[text, setText] = useState('');
-    const[imgs, setImgs] = useState([]);
-    const[data, setData] = useState({
-        original_title:[],
-        overview:[],
-        release_date:[],
-        vote_average:[]
-    });
+    const[data, setData] = useState([]);
+
    
  
     const textOnChange = (e) =>{
@@ -58,10 +53,10 @@ function Movies(){
         await fetch("https://api.themoviedb.org/3/movie/"+id+"?api_key=079e1321344ce579408e943ef3f60ca3&append_to_response=videos,images" ).then(resp =>{
             return resp.json();
         }).then(response =>{
-            let src =  "https://image.tmdb.org/t/p/w300" + response.poster_path;
-            let obj = {id:id, url:src}
-            setImgs((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
-            console.log(imgs)
+            let src =  "https://image.tmdb.org/t/p/w400" + response.poster_path;
+            let obj = {id:id, url:src, title:response.original_title, overview:response.overview, release_data:response.release_data, vote:response.vote_average}
+            setData((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
+            console.log(data)
             // let title = [...data.original_title];
             // title.push(response.original_title);
             // console.log("title is " + title)
@@ -75,7 +70,7 @@ function Movies(){
          values.id.forEach(elem => {
             MakeMovie(elem)
          })        
-         data.original_title.forEach(elem => console.log(elem))
+     
         
     },[]);
 
@@ -84,7 +79,7 @@ function Movies(){
        <div>
            <Header />
            <Search  onChange = {textOnChange} onSearch = {search}/>
-             {imgs.length >= 5 ? <Movie img = {imgs} data = {data} key = {Math.floor(Math.random()*10000)} /> : console.log("false")}
+             {data.length >= 5 ? <Movie data = {data}key = {Math.floor(Math.random()*10000)} /> : console.log("false")}
        </div>
     )
 }
