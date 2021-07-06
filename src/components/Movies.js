@@ -6,35 +6,21 @@ import $ from 'jquery';
 
 
 
-// {"adult":false,"id":3924,"original_title":"Blondie","popularity":1.723,"video":false},
-// {"adult":false,"id":6124,"original_title":"Der Mann ohne Namen","popularity":0.6,"video":false},
-// {"adult":false,"id":8773,"original_title":"L'amour à vingt ans","popularity":3.305,"video":false},
-// {"adult":false,"id":25449,"original_title":"New World Disorder 9: Never Enough","popularity":0.653,"video":false},
-// {"adult":false,"id":31975,"original_title":"Sesame Street: Elmo Loves You!","popularity":1.4,"video":true},
-// {"adult":false,"id":2,"original_title":"Ariel","popularity":9.318,"video":false},
-// {"adult":false,"id":3,"original_title":"Varjoja paratiisissa","popularity":6.43,"video":false},
-// {"adult":false,"id":5,"original_title":"Four Rooms","popularity":16.083,"video":false},
-// {"adult":false,"id":6,"original_title":"Judgment Night","popularity":8.83,"video":false},
-// {"adult":false,"id":8,"original_title":"Life in Loops (A Megacities RMX)","popularity":1.152,"video":false},
-// {"adult":false,"id":9,"original_title":"Sonntag im August","popularity":1.4,"video":false},
-// {"adult":false,"id":11,"original_title":"Star Wars","popularity":58.112,"video":false},
-// {"adult":false,"id":12,"original_title":"Finding Nemo","popularity":81.097,"video":false},
-// {"adult":false,"id":13,"original_title":"Forrest Gump","popularity":53.554,"video":false},
-// {"adult":false,"id":14,"original_title":"American Beauty","popularity":23.647,"video":false},
-// {"adult":false,"id":15,"original_title":"Citizen Kane","popularity":17.629,"video":false},
-// {"adult":false,"id":16,"original_title":"Dancer in the Dark","popularity":14.095,"video":false},
-// {"adult":false,"id":17,"original_title":"The Dark","popularity":7.505,"video":false},
-//,8773,25449,31975,2,12,3,5,6,8,9,11,12,13,14,15
+
 var values = 
     {
-        id:[3924,6124,8773,25449,31975,2,12,3,5,6,8,11,12,13,14,15,16,17]
+        id:[3924,6124,8773,25449,31975,2,12,3,5,6,8]
     
     };
+    for(let i = 11; i<50; i++){
+        values.id.push(i);
+    }
   
 
 function Movies(){
     const[text, setText] = useState('');
     const[data, setData] = useState([]);
+    const[num, setNum] = useState(0)
 
    
  
@@ -93,18 +79,83 @@ function Movies(){
             arr.forEach(elem =>{
                 MakeMovie(elem.id)
             })}
-            // let obj = {id:id, url:resp, title:response.original_title, overview:response.overview, release_data:response.release_data, vote:response.vote_average}
-            // setData((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
-        //    console.log(response)
-        //     console.log(data)
         })
     
     }
+    var current = 0;
+   const searchByLanguage = async(language,howMany) =>{
+     current = 0;
+      howMany = parseInt(howMany)
+      setNum(0)
+    if(language !== '' && howMany > 0){
+        setData([])
+        while(current <= howMany ){
+            console.log(num)
+        await fetchLanguage(language)
+
+            
+        }    
+   
+    }  
+    if(language === '' && howMany !== 0){
+        setData([])
+        for(let i = 0; i<howMany; i++){
+            let random = Math.floor(Math.random() * 100000);
+            await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=079e1321344ce579408e943ef3f60ca3").then(resp =>{
+                return resp.json();
+            }).then(response =>{
+                if(response.success === false || response.adult === true ||  (response.poster_path === null || response.poster_path === "" || response.poster_path === undefined)){
+                  i--;
+                }
+                else { 
+                    console.log(response)
+                    let src =  "https://image.tmdb.org/t/p/w400" + response.poster_path;
+                    let obj = {id:response.id, url:src, title:response.original_title, overview:response.overview, release_data:response.release_data, vote:response.vote_average}
+                    setData((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
+                    setNum((prev) => prev+1)
+                    console.log("num is")
+                    console.log(num);
+                    
+                }
+            
+            }).catch(err =>{console.log(err)})
+        } 
+    }
+   }
+   const fetchLanguage = async(language,id) =>{
+    let random = Math.floor(Math.random() * 100000);
+    await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=079e1321344ce579408e943ef3f60ca3&language="+language).then(resp =>{
+        return resp.json();
+    }).then(response =>{
+        
+        if(response.success === false || response.adult === true || (response.poster_path === null || response.poster_path === "" || response.poster_path === undefined)){
+          return;
+        }
+        else { 
+            current++;
+            console.log(response)
+            current  = current+1;
+            let src =  "https://image.tmdb.org/t/p/w400" + response.poster_path;
+            let obj = {id:response.id, url:src, title:response.original_title, overview:response.overview, release_data:response.release_data, vote:response.vote_average}
+            setData((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
+            setNum((prev) => prev+1)
+            console.log("num is")
+            console.log(num);
+        }
+    
+    }).catch(err =>{console.log(err)})
+   }
+
+   const fetchNumberTimes = async() =>{
+   
+   }
+
 
     return (
        <div>
            <Header />
-           <Search  onChange = {textOnChange} onSearch = {search}/>
+           
+           <Search  language = {searchByLanguage}  onChange = {textOnChange} onSearch = {search}/>
              {data.length >= 1 ? <Movie data = {data}key = {Math.floor(Math.random()*10000)} /> : console.log("false")}
        </div>
     )

@@ -16,7 +16,7 @@ function Movie(props){
                            <a href="http://dribbble.com/shots/1115632-Camera">Take a look</a>
                        </figcaption>
                    </figure>
-                   <p className = "title">original_title:</p>
+                   <p className = "title">{link.title}</p>
             </li>
         )}
     return(
