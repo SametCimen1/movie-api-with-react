@@ -1,38 +1,177 @@
-.App {
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+body {
   text-align: center;
+  width: 100%;
+  height: 100%;
+  background-color:#4287f5;
+  margin:0;
+  padding:0
+}
+.headContainer{
+width: 70%;
+margin:0 auto
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.headMainText{
+  color: rgba(44, 44, 44, 0.7);
+  margin: 3rem 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.headDescription{
+  color: rgba(63, 63, 63, 0.8);
+}
+.searchContainer{
+  width: 80%;
+  margin: 2rem auto;
+}
+.movieTitle::placeholder{
+  color: rgba(35, 32, 207, 0.7);
+  font-weight: 600;
+  font-size:1.3rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+
+.movieTitle{
+  
+  border:1px solid black;
+  border-radius: 2px;
+  width: 70%;
+  margin:0;
+  height: 50px;
+  color: rgba(35, 32, 207, 0.7);
+  text-indent: 20px;
+  font-weight: 600;
+  font-size:1.3rem;
+}
+.btn{
+  background-color:rgba(0, 0, 0, 0.315);
+  border:1px solid black;
+  font-size:1.3rem;
+  color: rgb(221, 221, 221);
+  width: 30%;
+  height: 50px;
+}
+
+.btn:hover{
+  background-color:rgb(0, 0, 0);
+  border:1px solid black;
+}
+.adv{
+  margin: 1rem 0;
+  text-decoration: underline;
+}
+
+.form{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ justify-content: center;  
+ align-items: center;
+
 }
 
-.App-link {
-  color: #61dafb;
+
+
+.grid {
+	padding: 20px 20px 100px 20px;
+	max-width: 1300px;
+	margin: 0 auto;
+	list-style: none;
+	text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.grid li {
+	display: inline-block;
+	width: 300px;
+	margin: 0;
+	padding: 20px;
+	text-align: left;
+	position: relative;
+}
+.grid figure {
+	margin: 0;
+	position: relative;
+}
+
+.grid figure img {
+	max-width: 100%;
+	display: block;
+	position: relative;
+}
+.grid figcaption {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 20px;
+	background: #2c3f52;
+	color: #ed4e6e;
+}
+.grid figcaption h3 {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+}
+
+.grid figcaption span:before {
+	content: 'by ';
+}
+
+.grid figcaption a {
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 2px;
+	display: inline-block;
+	background: #ed4e6e;
+	color: #fff;
+}
+
+@media screen and (max-width: 31.5em) {
+	.grid {
+		padding: 10px 10px 100px 10px;
+	}
+	.grid li {
+		width: 100%;
+		min-width: 300px;
+	}
+}
+.cs-style-1 figcaption {
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	text-align: center;
+	backface-visibility: hidden;
+	transition: transform 0.3s, opacity 0.3s;
+}
+ figure:hover figcaption,
+.cs-style-1 figure.cs-hover figcaption {
+	opacity: 1;
+	transform: translate(10px, 10px);
+}
+.cs-style-1 figcaption h3 {
+	margin-top: 70px;
+}
+
+.cs-style-1 figcaption span {
+	display: block;
+}
+
+.cs-style-1 figcaption a {
+	margin-top: 30px;
+}
+
+.cs-style-2 figure img {
+	z-index: 10;
+	transition: transform 0.4s;
+}
+
+
+.title{
+  text-align: center;
+  font-size:1.5rem;
 }
