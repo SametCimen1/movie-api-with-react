@@ -42,9 +42,7 @@ function Movies(){
         setText(e.target.value);
         console.log(text)
     } 
-    const search = () =>{
-        
-    }
+
     //fetch data here, make component for 20 first each data rendered 
   
 
@@ -69,17 +67,45 @@ function Movies(){
     useEffect(()=>{
          values.id.forEach(elem => {
             MakeMovie(elem)
-         })        
-     
-        
+         })         
     },[]);
 
+    useEffect(()=>{
+        setData([])
+        search()
+    },[text])
+
+    const search = async() =>{
+        if(text === ''){
+            values =   {
+                id:[3924,6124,8773,25449,31975,2,12,3,5,6,8,11,12,13,14,15,16,17]
+            };
+            values.id.forEach(elem => {
+                MakeMovie(elem)
+             })    
+
+        }
+        await fetch("https://api.themoviedb.org/3/search/movie?api_key=079e1321344ce579408e943ef3f60ca3&query=" + text).then(resp =>{
+            return resp.json();
+        }).then(response =>{
+            const arr = response.results;
+           if(arr !== undefined){
+            arr.forEach(elem =>{
+                MakeMovie(elem.id)
+            })}
+            // let obj = {id:id, url:resp, title:response.original_title, overview:response.overview, release_data:response.release_data, vote:response.vote_average}
+            // setData((prev) => [...prev.filter(prevSource =>  prevSource.url !== src), obj])
+        //    console.log(response)
+        //     console.log(data)
+        })
+    
+    }
 
     return (
        <div>
            <Header />
            <Search  onChange = {textOnChange} onSearch = {search}/>
-             {data.length >= 5 ? <Movie data = {data}key = {Math.floor(Math.random()*10000)} /> : console.log("false")}
+             {data.length >= 1 ? <Movie data = {data}key = {Math.floor(Math.random()*10000)} /> : console.log("false")}
        </div>
     )
 }
