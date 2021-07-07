@@ -31,10 +31,10 @@ function Movies(){
 
     //fetch data here, make component for 20 first each data rendered 
   
-
+    
     const MakeMovie = async(id) =>{
      
-        await fetch("https://api.themoviedb.org/3/movie/"+id+"?api_key=079e1321344ce579408e943ef3f60ca3&append_to_response=videos,images" ).then(resp =>{
+        await fetch("https://api.themoviedb.org/3/movie/"+id+"?api_key=APIKEY&append_to_response=videos,images" ).then(resp =>{
             return resp.json();
         }).then(response =>{
             let src =  "https://image.tmdb.org/t/p/w400" + response.poster_path;
@@ -71,7 +71,7 @@ function Movies(){
              })    
 
         }
-        await fetch("https://api.themoviedb.org/3/search/movie?api_key=079e1321344ce579408e943ef3f60ca3&query=" + text).then(resp =>{
+        await fetch("https://api.themoviedb.org/3/search/movie?api_key=APIKEY&query=" + text).then(resp =>{
             return resp.json();
         }).then(response =>{
             const arr = response.results;
@@ -101,7 +101,7 @@ function Movies(){
         setData([])
         for(let i = 0; i<howMany; i++){
             let random = Math.floor(Math.random() * 100000);
-            await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=079e1321344ce579408e943ef3f60ca3").then(resp =>{
+            await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=APIKEY").then(resp =>{
                 return resp.json();
             }).then(response =>{
                 if(response.success === false || response.adult === true ||  (response.poster_path === null || response.poster_path === "" || response.poster_path === undefined)){
@@ -124,7 +124,7 @@ function Movies(){
    }
    const fetchLanguage = async(language,id) =>{
     let random = Math.floor(Math.random() * 100000);
-    await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=079e1321344ce579408e943ef3f60ca3&language="+language).then(resp =>{
+    await fetch("https://api.themoviedb.org/3/movie/"+random+"?api_key=APIKEY&language="+language).then(resp =>{
         return resp.json();
     }).then(response =>{
         
